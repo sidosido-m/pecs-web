@@ -21,6 +21,16 @@ const resetPictograms = usePecsStore((state) => state.resetPictograms);
   { name: "Chocolat", category: "Nourriture", image: "/chocolat.png" },
   { name: "Oeuf", category: "Nourriture", image: "/oeuf.png" },
   { name: "Banane", category: "Nourriture", image: "/banane.png" },
+  { name: "Papa", category: "Famille", image: "/papa.png" },
+  { name: "Maman", category: "Famille", image: "/maman.png" },
+  { name: "Frere", category: "Famille", image: "/frere.png" },
+  { name: "Soeur", category: "Famille", image: "/soeur.png" },
+  { name: "Grand-Pere", category: "Famille", image: "/grand_pere.png" },
+  { name: "Grand-Mere", category: "Famille", image: "/grand_mere.png" },
+  { name: "Heureux", category: "Sentiment", image: "/heureux.png" },
+  { name: "Triste", category: "Sentiment", image: "/triste.png" },
+  { name: "Colere", category: "Sentiment", image: "/colere.png" },
+  { name: "fatigué", category: "Sentiment", image: "/fatigue.png" },
 ];
   
 

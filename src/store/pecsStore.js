@@ -48,14 +48,16 @@ export const usePecsStore = create((set, get) => ({
 
   // ➕ WORDS
   addWord: (word) =>
-    set((state) => ({
-      selectedWords: [...state.selectedWords, word],
-    })),
+  set((state) => ({
+    selectedWords: [...state.selectedWords, word],
+  })),
 
   removeWord: (word) =>
-    set((state) => ({
-      selectedWords: state.selectedWords.filter((w) => w !== word),
-    })),
+  set((state) => ({
+    selectedWords: state.selectedWords.filter(
+      (w) => w.name !== word.name
+    ),
+  })),
 
   clearSentence: () =>
     set({ selectedWords: [] }),
@@ -185,9 +187,8 @@ deletePictogram: (id) =>
     };
   }),
    // DRAG
- reorderPictograms: (startIndex, endIndex) =>
+reorderPictograms: (startIndex, endIndex) =>
   set((state) => {
-
     const activeDefaults = defaultPictograms.filter(
       (d) => !state.deletedDefaultIds.includes(d.id)
     );
@@ -195,20 +196,16 @@ deletePictogram: (id) =>
     const fullList = [
       ...activeDefaults,
       ...state.addedPictograms,
-    ].filter(Boolean); // 👈 مهم
+    ].filter(Boolean);
 
-    const result = Array.from(fullList).filter(Boolean);
+    const result = Array.from(fullList);
 
     const [removed] = result.splice(startIndex, 1);
     result.splice(endIndex, 0, removed);
 
     const newAdded = result.filter(
-      (item) =>
-        item &&
-        !defaultPictograms.some(d => d.id === item.id)
+      (item) => !defaultPictograms.some(d => d.id === item.id)
     );
-
-    saveToStorage(newAdded);
 
     return {
       addedPictograms: newAdded,

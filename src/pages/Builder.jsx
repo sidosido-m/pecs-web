@@ -7,9 +7,14 @@ export default function Builder() {
     clearSentence,
   } = usePecsStore();
 
-  const sentence =
+  const isFeeling = selectedWords.some(
+  (w) => w.category === "Sentiment"
+);
+
+const sentence =
   selectedWords.length > 0
-    ? "Je veux " + selectedWords.join(" ")
+    ? (isFeeling ? "Je suis " : "Je veux ") +
+      selectedWords.map((w) => w.name).join(" ")
     : "";
 
   const speakSentence = () => {
@@ -48,7 +53,7 @@ export default function Builder() {
             style={styles.word}
             onClick={() => removeWord(word)}
           >
-            {word}
+            {word.name}
           </div>
         ))}
       </div>

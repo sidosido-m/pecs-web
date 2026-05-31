@@ -5,21 +5,29 @@ import PictogramCard from "../components/PictogramCard";
 export default function Library() {
 
   const store = usePecsStore();
+  
 
   const selectedWords = store.selectedWords;
   const addWord = store.addWord;
   const pictograms = store.getPictograms();
 
   const [category, setCategory] = useState("Toutes");
+  const [dragIndex, setDragIndex] = useState(null);
+  const reorderPictograms = store.reorderPictograms;
 
   const filtered =
     category === "Toutes"
       ? pictograms
       : pictograms.filter((p) => p.category === category);
 
-      const sentence =
+    const isFeeling = selectedWords.some(
+  (w) => w.category === "Sentiment"
+);
+
+const sentence =
   selectedWords.length > 0
-    ? "Je veux " + selectedWords.join(" ")
+    ? (isFeeling ? "Je suis " : "Je veux ") +
+      selectedWords.map((w) => w.name).join(" ")
     : "";
 
   return (
@@ -42,12 +50,18 @@ export default function Library() {
 
       {/* Grid */}
       <div style={styles.grid}>
-        {filtered.map((item) => (
-          <PictogramCard
-            key={item.name}
-            item={item}
-            onClick={() => addWord(item.name)}
-          />
+        {filtered.map((item, index) => (
+          <div
+  draggable
+  onDragStart={() => setDragIndex(index)}
+  onDragOver={(e) => e.preventDefault()}
+  onDrop={() => reorderPictograms(dragIndex, index)}
+>
+  <PictogramCard
+    item={item}
+    onClick={() => addWord(item)}
+  />
+</div>
         ))}
       </div>
     </div>
